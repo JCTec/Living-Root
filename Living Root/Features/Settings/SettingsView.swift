@@ -6,57 +6,18 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Units") {
-                    Picker(
-                        "Temperature",
-                        selection: viewModel.temperatureUnitBinding()
-                    ) {
-                        ForEach(
-                            TemperatureUnit.allCases
-                        ) { unit in
-                            Text(unit.title)
-                                .tag(unit)
-                        }
-                    }
+                UnitsSection(
+                    viewModel: viewModel
+                )
 
-                    Picker(
-                        "Conductivity",
-                        selection: viewModel.conductivityUnitBinding()
-                    ) {
-                        ForEach(
-                            ConductivityUnit.allCases
-                        ) { unit in
-                            Text(unit.title)
-                                .tag(unit)
-                        }
-                    }
-                }
-
-                Section("Refresh") {
-                    Text(viewModel.refreshBehaviorText)
-                    Button("Refresh now") {
-                        Task {
-                            await viewModel.refreshNow()
-                        }
-                    }
-                }
+                RefreshSection(
+                    viewModel: viewModel
+                )
 
 #if DEBUG
-                Section("Debug") {
-                    Toggle(
-                        "Enable demo mode",
-                        isOn: viewModel.demoModeBinding()
-                    )
-
-                    Toggle(
-                        "Simulate offline",
-                        isOn: viewModel.forceOfflineBinding()
-                    )
-
-                    NavigationLink("Design System Showcase") {
-                        DesignSystemShowcaseView()
-                    }
-                }
+                DebugSection(
+                    viewModel: viewModel
+                )
 #endif
             }
             .navigationTitle("Settings")

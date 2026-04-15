@@ -12,15 +12,9 @@ struct DashboardMetricOrderSheet: View {
                     viewModel.metricOrder,
                     id: \.self
                 ) { metricKind in
-                    HStack(
-                        spacing: LRSpacing.medium
-                    ) {
-                        Image(systemName: metricKind.sfSymbol)
-                            .frame(width: 22)
-                            .foregroundStyle(LRPalette.accent)
-
-                        Text(metricKind.title)
-                    }
+                    MetricRow(
+                        metricKind: metricKind
+                    )
                 }
                 .onMove { offsets, destination in
                     viewModel.moveMetric(

@@ -31,14 +31,14 @@ struct AlertsView: View {
                         ForEach(
                             viewModel.alerts
                         ) { alert in
-                            alertCard(alert)
-                                .onTapGesture {
-                                    if alert.isUnread {
-                                        viewModel.markAsRead(
-                                            alertID: alert.id
-                                        )
-                                    }
+                            AlertCard(
+                                alert: alert,
+                                onTap: {
+                                    markAlertAsReadIfNeeded(
+                                        alert
+                                    )
                                 }
+                            )
                         }
                     }
                 }
@@ -74,73 +74,12 @@ struct AlertsView: View {
         }
     }
 
-    private func alertCard(
+    private func markAlertAsReadIfNeeded(
         _ alert: AlertItem
-    ) -> some View {
-        LRCard {
-            HStack(
-                alignment: .top,
-                spacing: LRSpacing.medium
-            ) {
-                unreadIndicator(
-                    isUnread: alert.isUnread
-                )
-
-                alertDetails(alert)
-
-                Spacer()
-            }
-        }
-    }
-
-    private func unreadIndicator(
-        isUnread: Bool
-    ) -> some View {
-        Circle()
-            .fill(
-                isUnread ? LRPalette.accent : LRPalette.border(for: colorScheme)
-            )
-            .frame(
-                width: 10,
-                height: 10
-            )
-            .padding(.top, LRSpacing.small)
-    }
-
-    private func alertDetails(
-        _ alert: AlertItem
-    ) -> some View {
-        VStack(
-            alignment: .leading,
-            spacing: LRSpacing.xSmall
-        ) {
-            Text(alert.title)
-                .font(.headline)
-                .foregroundStyle(
-                    LRPalette.textPrimary(
-                        for: colorScheme
-                    )
-                )
-
-            Text(alert.message)
-                .font(.body)
-                .foregroundStyle(
-                    LRPalette.textSecondary(
-                        for: colorScheme
-                    )
-                )
-
-            Text(
-                alert.timestamp.formatted(
-                    date: .abbreviated,
-                    time: .shortened
-                )
-            )
-            .font(.caption)
-            .foregroundStyle(
-                LRPalette.textSecondary(
-                    for: colorScheme
-                )
+    ) {
+        if alert.isUnread {
+            viewModel.markAsRead(
+                alertID: alert.id
             )
         }
     }

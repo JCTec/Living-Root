@@ -19,55 +19,15 @@ struct InsightsView: View {
                     }
 
                     if viewModel.insights.isEmpty {
-                        LRCard {
-                            Text("No insights available yet.")
-                                .font(.body)
-                                .foregroundStyle(
-                                    LRPalette.textSecondary(
-                                        for: colorScheme
-                                    )
-                                )
-                        }
+                        EmptyStateCard()
                         .frame(maxWidth: .infinity)
                     } else {
                         ForEach(
                             viewModel.insights
                         ) { insight in
-                            LRCard {
-                                VStack(
-                                    alignment: .leading,
-                                    spacing: LRSpacing.small
-                                ) {
-                                    Text(insight.title)
-                                        .font(.headline)
-                                        .foregroundStyle(
-                                            LRPalette.textPrimary(
-                                                for: colorScheme
-                                            )
-                                        )
-
-                                    Text(insight.message)
-                                        .font(.body)
-                                        .foregroundStyle(
-                                            LRPalette.textSecondary(
-                                                for: colorScheme
-                                            )
-                                        )
-
-                                    Text(
-                                        insight.timestamp.formatted(
-                                            date: .abbreviated,
-                                            time: .shortened
-                                        )
-                                    )
-                                    .font(.caption)
-                                    .foregroundStyle(
-                                        LRPalette.textSecondary(
-                                            for: colorScheme
-                                        )
-                                    )
-                                }
-                            }
+                            InsightCard(
+                                insight: insight
+                            )
                             .frame(maxWidth: .infinity)
                         }
                     }

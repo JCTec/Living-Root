@@ -12,7 +12,10 @@ struct DashboardView: View {
                     alignment: .leading,
                     spacing: LRSpacing.large
                 ) {
-                    header
+                    Header(
+                        systemStateTitle: viewModel.systemState.title,
+                        tone: viewModel.stateTone()
+                    )
 
                     if let cacheMessage = viewModel.cacheMessage {
                         LRInlineBanner(
@@ -20,21 +23,8 @@ struct DashboardView: View {
                         )
                     }
 
-                    HStack {
-                        Text("Metrics")
-                            .font(.headline)
-                            .foregroundStyle(
-                                LRPalette.textPrimary(
-                                    for: colorScheme
-                                )
-                            )
-
-                        Spacer()
-
-                        Button("Change Order") {
+                    MetricsHeader {
                             viewModel.isMetricOrderSheetPresented = true
-                        }
-                        .font(.subheadline.weight(.semibold))
                     }
 
                     ForEach(
@@ -63,14 +53,9 @@ struct DashboardView: View {
                         )
                     }
 
-                    Text("Updated: \(viewModel.lastUpdatedText)")
-                        .font(.caption)
-                        .foregroundStyle(
-                            LRPalette.textSecondary(
-                                for: colorScheme
-                            )
-                        )
-                        .padding(.top, LRSpacing.small)
+                    LastUpdatedLabel(
+                        text: viewModel.lastUpdatedText
+                    )
                 }
                 .padding(.horizontal, LRSpacing.large)
                 .padding(.vertical, LRSpacing.large)
@@ -96,38 +81,6 @@ struct DashboardView: View {
                     viewModel: viewModel
                 )
             }
-        }
-    }
-
-    private var header: some View {
-        HStack {
-            VStack(
-                alignment: .leading,
-                spacing: LRSpacing.xSmall
-            ) {
-                Text("LivingRoot")
-                    .font(.title3.weight(.semibold))
-                    .foregroundStyle(
-                        LRPalette.textPrimary(
-                            for: colorScheme
-                        )
-                    )
-
-                Text("Smart System Monitor")
-                    .font(.footnote)
-                    .foregroundStyle(
-                        LRPalette.textSecondary(
-                            for: colorScheme
-                        )
-                    )
-            }
-
-            Spacer()
-
-            LRStateBadge(
-                title: viewModel.systemState.title,
-                tone: viewModel.stateTone()
-            )
         }
     }
 }
