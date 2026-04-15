@@ -1,0 +1,49 @@
+import SwiftUI
+
+struct DashboardMetricOrderSheet: View {
+    @Bindable var viewModel: DashboardViewModel
+
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            List {
+                ForEach(
+                    viewModel.metricOrder,
+                    id: \.self
+                ) { metricKind in
+                    HStack(
+                        spacing: LRSpacing.medium
+                    ) {
+                        Image(systemName: metricKind.sfSymbol)
+                            .frame(width: 22)
+                            .foregroundStyle(LRPalette.accent)
+
+                        Text(metricKind.title)
+                    }
+                }
+                .onMove { offsets, destination in
+                    viewModel.moveMetric(
+                        fromOffsets: offsets,
+                        toOffset: destination
+                    )
+                }
+            }
+            .environment(
+                \.editMode,
+                .constant(.active)
+            )
+            .navigationTitle("Reorder Metrics")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(
+                    placement: .topBarTrailing
+                ) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                }
+            }
+        }
+    }
+}
