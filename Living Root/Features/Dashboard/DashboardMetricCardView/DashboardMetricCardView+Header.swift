@@ -75,6 +75,11 @@ extension DashboardMetricCardView {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier(
+                DashboardAccessibilityIdentifiers.metricCardHeaderButton(
+                    kindRawValue: metricReading.kind.rawValue
+                )
+            )
         }
     }
 }

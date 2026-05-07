@@ -6,6 +6,7 @@ import SwiftData
 @Observable
 final class AppDependencies {
     let modelContainer: ModelContainer
+    let authStore: AuthStore
     let settingsStore: SettingsStore
     let monitoringRepository: MonitoringRepository
 
@@ -15,6 +16,8 @@ final class AppDependencies {
 
     init(modelContainer: ModelContainer) {
         self.modelContainer = modelContainer
+        Self.resetPersistedStateIfNeeded()
+        authStore = AuthStore()
         settingsStore = SettingsStore()
 #if DEBUG
         debugStore = DebugStore()
@@ -73,5 +76,20 @@ final class AppDependencies {
             forceOffline: false
         )
 #endif
+    }
+
+    private static func resetPersistedStateIfNeeded() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard arguments.contains(AppLaunchArguments.uiTestResetState) else {
+            return
+        }
+
+        guard let bundleIdentifier = Bundle.main.bundleIdentifier else {
+            return
+        }
+
+        UserDefaults.standard.removePersistentDomain(
+            forName: bundleIdentifier
+        )
     }
 }

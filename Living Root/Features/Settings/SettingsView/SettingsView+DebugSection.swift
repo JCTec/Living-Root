@@ -11,15 +11,24 @@ extension SettingsView {
                     "Enable demo mode",
                     isOn: viewModel.demoModeBinding()
                 )
+                .accessibilityIdentifier(
+                    SettingsAccessibilityIdentifiers.demoModeToggle
+                )
 
                 Toggle(
                     "Simulate offline",
                     isOn: viewModel.forceOfflineBinding()
                 )
+                .accessibilityIdentifier(
+                    SettingsAccessibilityIdentifiers.forceOfflineToggle
+                )
 
                 NavigationLink("Design System Showcase") {
                     DesignSystemShowcaseView()
                 }
+                .accessibilityIdentifier(
+                    SettingsAccessibilityIdentifiers.designSystemShowcaseLink
+                )
             }
         }
     }

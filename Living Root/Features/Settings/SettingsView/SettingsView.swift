@@ -6,6 +6,10 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                AccountSection(
+                    viewModel: viewModel
+                )
+
                 UnitsSection(
                     viewModel: viewModel
                 )
@@ -20,6 +24,9 @@ struct SettingsView: View {
                 )
 #endif
             }
+            .accessibilityIdentifier(
+                SettingsAccessibilityIdentifiers.rootView
+            )
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
         }

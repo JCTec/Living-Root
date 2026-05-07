@@ -3,6 +3,7 @@ import SwiftUI
 struct AppRootView: View {
     let dependencies: AppDependencies
 
+    @State private var loginViewModel: LoginViewModel
     @State private var dashboardViewModel: DashboardViewModel
     @State private var insightsViewModel: InsightsViewModel
     @State private var alertsViewModel: AlertsViewModel
@@ -11,6 +12,11 @@ struct AppRootView: View {
 
     init(dependencies: AppDependencies) {
         self.dependencies = dependencies
+        _loginViewModel = State(
+            initialValue: LoginViewModel(
+                dependencies: dependencies
+            )
+        )
         _dashboardViewModel = State(
             initialValue: DashboardViewModel(
                 dependencies: dependencies
@@ -34,6 +40,25 @@ struct AppRootView: View {
     }
 
     var body: some View {
+        Group {
+            if dependencies.authStore.isSignedIn {
+                authenticatedRoot
+            } else {
+                LoginView(
+                    viewModel: loginViewModel
+                )
+            }
+        }
+        .onChange(
+            of: dependencies.authStore.isSignedIn
+        ) { _, isSignedIn in
+            if !isSignedIn {
+                hasBootstrapped = false
+            }
+        }
+    }
+
+    private var authenticatedRoot: some View {
         TabView {
             DashboardView(
                 viewModel: dashboardViewModel
@@ -42,6 +67,9 @@ struct AppRootView: View {
                 Label(
                     "Dashboard",
                     systemImage: "gauge.with.dots.needle.67percent"
+                )
+                .accessibilityIdentifier(
+                    AppRootAccessibilityIdentifiers.dashboardTab
                 )
             }
 
@@ -52,6 +80,9 @@ struct AppRootView: View {
                 Label(
                     "Insights",
                     systemImage: "lightbulb"
+                )
+                .accessibilityIdentifier(
+                    AppRootAccessibilityIdentifiers.insightsTab
                 )
             }
 
@@ -65,8 +96,14 @@ struct AppRootView: View {
                     "Settings",
                     systemImage: "gearshape"
                 )
+                .accessibilityIdentifier(
+                    AppRootAccessibilityIdentifiers.settingsTab
+                )
             }
         }
+        .accessibilityIdentifier(
+            AppRootAccessibilityIdentifiers.tabBar
+        )
         .task {
             guard !hasBootstrapped else {
                 return
@@ -88,6 +125,9 @@ struct AppRootView: View {
             Label(
                 "Alerts",
                 systemImage: "bell"
+            )
+            .accessibilityIdentifier(
+                AppRootAccessibilityIdentifiers.alertsTab
             )
         }
 

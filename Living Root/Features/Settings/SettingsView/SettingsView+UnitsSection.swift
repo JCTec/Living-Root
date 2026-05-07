@@ -17,6 +17,9 @@ extension SettingsView {
                             .tag(unit)
                     }
                 }
+                .accessibilityIdentifier(
+                    SettingsAccessibilityIdentifiers.temperaturePicker
+                )
 
                 Picker(
                     "Conductivity",
@@ -29,6 +32,9 @@ extension SettingsView {
                             .tag(unit)
                     }
                 }
+                .accessibilityIdentifier(
+                    SettingsAccessibilityIdentifiers.conductivityPicker
+                )
             }
         }
     }

@@ -55,6 +55,11 @@ extension AlertsView {
             .onTapGesture {
                 onTap()
             }
+            .accessibilityIdentifier(
+                AlertsAccessibilityIdentifiers.alertCard(
+                    id: alert.id
+                )
+            )
         }
 
         private var unreadIndicator: some View {

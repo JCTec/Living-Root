@@ -34,6 +34,9 @@ struct InsightsView: View {
                 }
                 .padding(.vertical, LRSpacing.large)
             }
+            .accessibilityIdentifier(
+                InsightsAccessibilityIdentifiers.rootView
+            )
             .background(
                 LRPalette.background(
                     for: colorScheme

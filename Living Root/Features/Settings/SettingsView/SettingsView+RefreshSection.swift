@@ -12,6 +12,9 @@ extension SettingsView {
                         await viewModel.refreshNow()
                     }
                 }
+                .accessibilityIdentifier(
+                    SettingsAccessibilityIdentifiers.refreshNowButton
+                )
             }
         }
     }

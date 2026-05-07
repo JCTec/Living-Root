@@ -25,6 +25,7 @@ struct DashboardMetricCardView: View {
 
                 if isExpanded {
                     ChartView(
+                        metricKind: metricReading.kind,
                         selectedRange: $selectedRange,
                         chartSamples: chartSamples
                     )
@@ -34,5 +35,10 @@ struct DashboardMetricCardView: View {
                 }
             }
         }
+        .accessibilityIdentifier(
+            DashboardAccessibilityIdentifiers.metricCard(
+                kindRawValue: metricReading.kind.rawValue
+            )
+        )
     }
 }

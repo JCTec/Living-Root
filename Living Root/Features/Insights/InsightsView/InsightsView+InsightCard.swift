@@ -42,6 +42,11 @@ extension InsightsView {
                     )
                 }
             }
+            .accessibilityIdentifier(
+                InsightsAccessibilityIdentifiers.insightCard(
+                    id: insight.id
+                )
+            )
         }
     }
 }

@@ -14,6 +14,14 @@ final class SettingsViewModel {
         "Load on start and pull to refresh."
     }
 
+    var signedInName: String {
+        dependencies.authStore.currentUser?.name ?? "Unknown User"
+    }
+
+    var signedInUsername: String {
+        dependencies.authStore.currentUser?.username ?? "unknown"
+    }
+
     func temperatureUnitBinding() -> Binding<TemperatureUnit> {
         Binding(
             get: {
@@ -40,6 +48,10 @@ final class SettingsViewModel {
         await dependencies.refreshSnapshot(
             forceRefresh: true
         )
+    }
+
+    func signOut() {
+        dependencies.authStore.signOut()
     }
 
 #if DEBUG

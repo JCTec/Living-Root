@@ -27,6 +27,9 @@ struct AlertsView: View {
                                     )
                                 )
                         }
+                        .accessibilityIdentifier(
+                            AlertsAccessibilityIdentifiers.emptyStateCard
+                        )
                     } else {
                         ForEach(
                             viewModel.alerts
@@ -45,6 +48,9 @@ struct AlertsView: View {
                 .padding(.horizontal, LRSpacing.large)
                 .padding(.vertical, LRSpacing.large)
             }
+            .accessibilityIdentifier(
+                AlertsAccessibilityIdentifiers.rootView
+            )
             .background(
                 LRPalette.background(
                     for: colorScheme
@@ -61,6 +67,9 @@ struct AlertsView: View {
                         Button("Mark all read") {
                             viewModel.markAllAsRead()
                         }
+                        .accessibilityIdentifier(
+                            AlertsAccessibilityIdentifiers.markAllReadButton
+                        )
                         .font(.subheadline.weight(.semibold))
                     }
                 }

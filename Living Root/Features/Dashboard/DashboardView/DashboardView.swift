@@ -60,6 +60,9 @@ struct DashboardView: View {
                 .padding(.horizontal, LRSpacing.large)
                 .padding(.vertical, LRSpacing.large)
             }
+            .accessibilityIdentifier(
+                DashboardAccessibilityIdentifiers.rootView
+            )
             .background(
                 LRPalette.background(
                     for: colorScheme

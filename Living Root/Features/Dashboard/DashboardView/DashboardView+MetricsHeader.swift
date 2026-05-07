@@ -21,6 +21,9 @@ extension DashboardView {
                 Button("Change Order") {
                     onChangeOrderTap()
                 }
+                .accessibilityIdentifier(
+                    DashboardAccessibilityIdentifiers.changeOrderButton
+                )
                 .font(.subheadline.weight(.semibold))
             }
         }

@@ -3,6 +3,7 @@ import SwiftUI
 
 extension DashboardMetricCardView {
     struct ChartView: View {
+        let metricKind: MetricKind
         @Binding var selectedRange: MetricRange
         let chartSamples: [MetricSample]
 
@@ -25,6 +26,11 @@ extension DashboardMetricCardView {
                     }
                 }
                 .pickerStyle(.segmented)
+                .accessibilityIdentifier(
+                    DashboardAccessibilityIdentifiers.metricRangePicker(
+                        kindRawValue: metricKind.rawValue
+                    )
+                )
 
                 Group {
                     if chartSamples.isEmpty {
@@ -135,6 +141,11 @@ extension DashboardMetricCardView {
                 }
             }
             .frame(height: 180)
+            .accessibilityIdentifier(
+                DashboardAccessibilityIdentifiers.metricChart(
+                    kindRawValue: metricKind.rawValue
+                )
+            )
         }
 
         private var selectedSample: MetricSample? {

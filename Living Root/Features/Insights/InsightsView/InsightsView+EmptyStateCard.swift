@@ -14,6 +14,9 @@ extension InsightsView {
                         )
                     )
             }
+            .accessibilityIdentifier(
+                InsightsAccessibilityIdentifiers.emptyStateCard
+            )
         }
     }
 }

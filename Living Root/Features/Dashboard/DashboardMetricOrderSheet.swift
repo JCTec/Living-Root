@@ -23,6 +23,9 @@ struct DashboardMetricOrderSheet: View {
                     )
                 }
             }
+            .accessibilityIdentifier(
+                DashboardAccessibilityIdentifiers.metricOrderList
+            )
             .environment(
                 \.editMode,
                 .constant(.active)
@@ -36,6 +39,9 @@ struct DashboardMetricOrderSheet: View {
                     Button("Done") {
                         dismiss()
                     }
+                    .accessibilityIdentifier(
+                        DashboardAccessibilityIdentifiers.metricOrderSheetDoneButton
+                    )
                 }
             }
         }
